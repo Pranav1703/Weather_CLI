@@ -61,7 +61,7 @@ func GetCoOrd(city string) (coOrd,error){
 	if err != nil {
 		fmt.Printf("error: %s\n",err)
 	}
-	if req.StatusCode > 399 {
+	if req.StatusCode != 200 {
 		return coOrd{} , fmt.Errorf("bad status code : %v",req.StatusCode)
 	}
 
@@ -83,6 +83,10 @@ func CurrentWeather(lat string,lon string)(weatherData , error){
 	if err!= nil{
 		return weatherData{},err	
 	}
+
+	if req.StatusCode != 200 {
+		return weatherData{} , fmt.Errorf("bad status code : %v",req.StatusCode)
+	}
 	defer req.Body.Close()
 
 	var response weatherData
@@ -101,6 +105,10 @@ func AqiValue(lat string,lon string)(aqi, error){
 	if err!= nil{
 		return aqi{},err	
 	}
+	if req.StatusCode != 200 {
+		return aqi{} , fmt.Errorf("bad status code : %v",req.StatusCode)
+	}
+
 	defer req.Body.Close()
 	var response aqi
 	if err:= json.NewDecoder(req.Body).Decode(&response); err!=nil {

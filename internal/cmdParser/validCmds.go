@@ -170,7 +170,7 @@ func helpFunc(){
 	allCommands := GetCommands()
 	color.HiGreen("------------------------------------------------- All Commands -------------------------------------------------------")
 	for _,cmd:=range allCommands {
-		fmt.Printf("=> %s   : %s\n",cmd.name,cmd.description)
+		color.HiWhite("=> %s   : %s\n",cmd.name,cmd.description)
 	}
 }
 
